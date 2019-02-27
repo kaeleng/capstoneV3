@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreMotion
+import UserNotifications
 
 class ViewController: UIViewController {
     
@@ -23,6 +24,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
+            (granted, error) in
+            if granted {
+                print("yes")
+            }
+            else {
+                print("no")
+            }
+        }
+        
         let status = CMPedometer.authorizationStatus()
         startTrackingDistance()
 //                if status == .authorized{
@@ -62,10 +74,35 @@ class ViewController: UIViewController {
     }
     
     private func doStuffBasedOnDistance(distance: Double?){
-        if distance! > 1.0 && distanceMessageTriggered == false {
+        if distance! > 10.0 && distanceMessageTriggered == false {
             distanceMessageTriggered = true
-            print("distance 1")
+            print("distance 20")
+            sendNotification(distance: distance)
         }
+    }
+    
+    func sendNotification(distance: Double?) {
+        
+        if let alertDistance = distance {
+            let center = UNUserNotificationCenter.current()
+            
+            let content = UNMutableNotificationContent()
+            content.title = "You have walked \(alertDistance) meters"
+            content.body = "Open the app to learn more"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: "Content Identifier", content: content, trigger: trigger)
+            
+            center.add(request) { (error) in
+                if error != nil {
+                    print("error \(String(describing: error))")
+                }
+                
+            }
+        }
+        
     }
 
 
