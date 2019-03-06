@@ -9,6 +9,7 @@
 import UIKit
 import CoreMotion
 import UserNotifications
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -20,6 +21,7 @@ class ViewController: UIViewController {
     private let activityManager = CMMotionActivityManager()
     private let pedometer = CMPedometer()
 
+    var player: AVPlayer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +50,35 @@ class ViewController: UIViewController {
 //                    alert.addAction(UIAlertAction(title: "Okay.", style: .default) { _ in })
 //                    self.present(alert, animated: true){}
 //                }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(
+                AVAudioSession.Category.playback,
+                mode: .default,
+                options: [])
+        } catch {
+            print("Failed to set audio session category.  Error: \(error)")
+        }
+        
+        var item: AVPlayerItem? = nil
+        if let url = Bundle.main.url(forResource: "silence", withExtension: "mp3") {
+            item = AVPlayerItem(url: url)
+        }
+        self.player = AVPlayer(playerItem: item)
+        
+        player?.actionAtItemEnd = .none
+        player?.play()
+        
+        player?.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 100), queue: DispatchQueue.main) { [weak self] time in
+            guard let self = self else { return }
+            let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
+            
+            if UIApplication.shared.applicationState == .active {
+                print("Active: \(timeString)")
+            } else {
+                print("Background: \(timeString)")
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
