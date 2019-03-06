@@ -75,8 +75,12 @@ class ScrollViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func startWalking(sender: UIButton!){
-        let vc = ViewController()
-        self.present(vc, animated: true, completion:nil)
+//        let vc = ViewController()
+//        self.present(vc, animated: true, completion:nil)
+//        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "ViewController")
+        self.present(controller, animated: true, completion: nil)
     }
 
 }

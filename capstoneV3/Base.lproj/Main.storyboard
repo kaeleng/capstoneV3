@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="104.8" y="26.53673163418291"/>
         </scene>
-        <!--View Controller-->
+        <!--ViewController-->
         <scene sceneID="jqU-Ya-don">
             <objects>
-                <viewController id="HEj-XZ-5TG" customClass="ViewController" customModule="capstoneV3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" title="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HEj-XZ-5TG" customClass="ViewController" customModule="capstoneV3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="epu-la-iAm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
