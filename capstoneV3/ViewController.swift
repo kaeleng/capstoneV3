@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     var stepMessageTriggered = false
     var distanceMessageTriggered = false
     
+    var distanceTriggered = 10.0
+    
     private let activityManager = CMMotionActivityManager()
     private let pedometer = CMPedometer()
 
@@ -54,7 +56,7 @@ class ViewController: UIViewController {
             try AVAudioSession.sharedInstance().setCategory(
                 AVAudioSession.Category.playback,
                 mode: .default,
-                options: [])
+                options: .mixWithOthers)
         } catch {
             print("Failed to set audio session category.  Error: \(error)")
         }
@@ -68,16 +70,16 @@ class ViewController: UIViewController {
         player?.actionAtItemEnd = .none
         player?.play()
         
-        player?.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 100), queue: DispatchQueue.main) { [weak self] time in
-            guard let self = self else { return }
-            let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
-            
-            if UIApplication.shared.applicationState == .active {
-                print("Active: \(timeString)")
-            } else {
-                print("Background: \(timeString)")
-            }
-        }
+//        player?.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 100), queue: DispatchQueue.main) { [weak self] time in
+//            guard let self = self else { return }
+//            let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
+//            
+//            if UIApplication.shared.applicationState == .active {
+//                print("Active: \(timeString)")
+//            } else {
+//                print("Background: \(timeString)")
+//            }
+//        }
         
     }
     
@@ -91,16 +93,18 @@ class ViewController: UIViewController {
             [weak self] pedometerData, error in
             guard let pedometerData = pedometerData, error == nil else { return }
             print("in startUpdates")
-            DispatchQueue.main.async{
-                print("check")
-                //                self?.distance = pedometerData.distance?.doubleValue
-                //                self?.steps = pedometerData.numberOfSteps
-                self?.doStuffBasedOnDistance(distance: pedometerData.distance?.doubleValue)
-                //                self?.doStuffBasedOnSteps(steps: self?.steps)
-                print(pedometerData.distance ?? 0)
+            self?.distance = pedometerData.distance?.doubleValue
+            
+            print(pedometerData.distance ?? 0)
+
+            if (self?.distance)! > (self?.distanceTriggered)! {
+                print("true")
+                self?.sendNotification(distance: pedometerData.distance?.doubleValue)
+                self?.distanceTriggered += 10.0
+            }
                 //                print("Steps: ")
                 //                print(self?.steps)
-            }
+        
         }
     }
     
@@ -114,6 +118,8 @@ class ViewController: UIViewController {
     
     func sendNotification(distance: Double?) {
         
+        print("in send notification")
+        
         if let alertDistance = distance {
             let center = UNUserNotificationCenter.current()
             
@@ -122,7 +128,7 @@ class ViewController: UIViewController {
             content.body = "Open the app to learn more"
             content.sound = UNNotificationSound.default
             
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
             
             let request = UNNotificationRequest(identifier: "Content Identifier", content: content, trigger: trigger)
             
