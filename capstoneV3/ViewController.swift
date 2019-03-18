@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         UNUserNotificationCenter.current().delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) {
             (granted, error) in
             if granted {
                 print("yes")
