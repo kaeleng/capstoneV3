@@ -27,6 +27,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UNUserNotificationCenter.current().delegate = self
         // Do any additional setup after loading the view, typically from a nib.
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) {
@@ -117,31 +118,38 @@ class ViewController: UIViewController {
     }
     
     func sendNotification(distance: Double?) {
-        
-        print("in send notification")
-        
         if let alertDistance = distance {
-            let center = UNUserNotificationCenter.current()
             
+            //creates content of notification
             let content = UNMutableNotificationContent()
             content.title = "You have walked \(alertDistance) meters"
-            content.body = "Open the app to learn more"
+            content.body = "Expand notification to see more"
+            content.categoryIdentifier = "infoCategory"
             content.sound = UNNotificationSound.default
             
+            let url = Bundle.main.url(forResource: "1", withExtension: "png")
+            if let attachment = try? UNNotificationAttachment(identifier: "information", url: url!, options: nil){
+                content.attachments = [attachment]
+            }
+            
+            //tigger - what are the conditions for it to fire
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
             
-            let request = UNNotificationRequest(identifier: "Content Identifier", content: content, trigger: trigger)
+            //create request
+            let requestIdentifier = "information"
+            let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
             
-            center.add(request) { (error) in
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
                 if error != nil {
-                    print("error \(String(describing: error))")
+                    print("error \(String(describing:error))")
                 }
-                
-            }
+            })
         }
-        
-    } 
-
-
+    }
 }
 
+extension ViewController: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
+}
