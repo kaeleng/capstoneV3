@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     private let pedometer = CMPedometer()
 
     var player: AVPlayer?
+    
+    var notCount: Int? = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,48 +99,54 @@ class ViewController: UIViewController {
             self?.distance = pedometerData.distance?.doubleValue
             
             print(pedometerData.distance ?? 0)
-
+            
             if (self?.distance)! > (self?.distanceTriggered)! {
                 print("true")
-                self?.sendNotification(distance: pedometerData.distance?.doubleValue)
+                self?.notCount! += 1
+                self?.sendNotification(distance: pedometerData.distance?.doubleValue, notifyCount: self?.notCount!)
                 self?.distanceTriggered += 10.0
             }
-                //                print("Steps: ")
-                //                print(self?.steps)
-        
-        }
-    }
-    
-    private func doStuffBasedOnDistance(distance: Double?){
-        if distance! > 10.0 && distanceMessageTriggered == false {
-            distanceMessageTriggered = true
-            print("distance 20")
-            sendNotification(distance: distance)
-        }
-    }
-    
-    func sendNotification(distance: Double?) {
-        if let alertDistance = distance {
+            //                print("Steps: ")
+            //                print(self?.steps)
             
+        }
+    }
+    
+//    private func doStuffBasedOnDistance(distance: Double?){
+//        if distance! > 10.0 && distanceMessageTriggered == false {
+//            distanceMessageTriggered = true
+//            print("distance 20")
+//            sendNotification(distance: distance)
+//        }
+//    }
+    
+    func sendNotification(distance: Double?, notifyCount: Int?) {
+        if let alertDistance = distance {
+
             //creates content of notification
             let content = UNMutableNotificationContent()
             content.title = "You have walked \(alertDistance) meters"
             content.body = "Expand notification to see more"
             content.categoryIdentifier = "infoCategory"
             content.sound = UNNotificationSound.default
-            
-            let url = Bundle.main.url(forResource: "1", withExtension: "png")
+            var pic = 0
+            if notifyCount! <= 3 {
+                pic = notifyCount!
+            }else{
+                pic = 1
+            }
+            let url = Bundle.main.url(forResource: "\(pic)", withExtension: "png")
             if let attachment = try? UNNotificationAttachment(identifier: "information", url: url!, options: nil){
                 content.attachments = [attachment]
             }
-            
+
             //tigger - what are the conditions for it to fire
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-            
+
             //create request
             let requestIdentifier = "information"
             let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
-            
+
             UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
                 if error != nil {
                     print("error \(String(describing:error))")
@@ -147,6 +155,8 @@ class ViewController: UIViewController {
         }
     }
 }
+    
+
 
 extension ViewController: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
