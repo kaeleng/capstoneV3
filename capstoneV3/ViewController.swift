@@ -15,8 +15,7 @@ class ViewController: UIViewController {
     
     var distance : Double! = nil
     var steps : NSNumber! = nil
-    var stepMessageTriggered = false
-    var distanceMessageTriggered = false
+    var finishedMessageTriggered = false
     
     var distanceTriggered = 10.0
     
@@ -106,7 +105,8 @@ class ViewController: UIViewController {
                 self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             }
             
-            if (self?.distance)! > 40.0 {
+            if (self?.distance)! > 40.0 && self?.finishedMessageTriggered == false {
+                self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
             }
             else if (self?.distance)! > (self?.distanceTriggered)! {
@@ -198,5 +198,15 @@ class ViewController: UIViewController {
 extension ViewController: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        if response.notification.request.identifier == "finish" {
+            print("handling notifications with the FinishIdentifier Identifier")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "FinishedViewController")
+            self.present(controller, animated: true, completion: nil)
+        }
+        completionHandler()
     }
 }
