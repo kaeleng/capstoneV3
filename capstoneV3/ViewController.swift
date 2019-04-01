@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     
     var notCount: Int? = 0
 
+    @IBOutlet weak var distLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UNUserNotificationCenter.current().delegate = self
@@ -99,6 +101,7 @@ class ViewController: UIViewController {
             self?.distance = pedometerData.distance?.doubleValue
             
             print(pedometerData.distance ?? 0)
+            self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             
             if (self?.distance)! > (self?.distanceTriggered)! {
                 print("true")
@@ -119,6 +122,15 @@ class ViewController: UIViewController {
 //            sendNotification(distance: distance)
 //        }
 //    }
+    
+    func metersToMiles(distance: Double?) -> String {
+        guard let distance = distance else {
+            return "0 miles"
+        }
+        let miles = distance * 0.0006213712
+        let milesStr = String(format: "%.2f", miles)
+        return milesStr + " miles"
+    }
     
     func sendNotification(distance: Double?, notifyCount: Int?) {
         if let alertDistance = distance {
