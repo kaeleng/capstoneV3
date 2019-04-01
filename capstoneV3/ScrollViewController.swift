@@ -32,21 +32,22 @@ class ScrollViewController: UIViewController, UIScrollViewDelegate {
     }()
     
     lazy var startButton: UIButton = {
-        let sb = UIButton(frame: CGRect(x: view.frame.width/2 - (200/2), y: view.frame.height-100, width: 200, height: 50))
+        let sb = UIButton(frame: CGRect(x: view.frame.width/2 - (200/2), y: view.frame.height-110, width: 200, height: 50))
         sb.setTitle("Start Walking", for: .normal)
         sb.addTarget(self, action: #selector(startWalking), for:.touchUpInside)
+        sb.backgroundColor = UIColor(displayP3Red: 109.0/255.0, green: 118.0/255.0, blue: 127.0/255.0, alpha: 1.0)
         return sb
     }()
     
     fileprivate func setupView() {
         view.addSubview(scrollView)
         view.addSubview(pageControl)
-        view.addSubview(startButton)
+        delay(8.0, closure: {self.view.addSubview(self.startButton)})
         
         NSLayoutConstraint.activate([
             
             pageControl.leftAnchor.constraint(equalTo:view.leftAnchor),
-            pageControl.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-100.0),
+            pageControl.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-150.0),
             pageControl.rightAnchor.constraint(equalTo:view.rightAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 50)
             
@@ -72,6 +73,11 @@ class ScrollViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = scrollView.contentOffset.x / scrollView.frame.size.width
         pageControl.currentPage = Int(pageNumber)
+    }
+    
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        let when = DispatchTime.now() + delay
+        DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
     }
     
     @objc func startWalking(sender: UIButton!){
