@@ -101,9 +101,15 @@ class ViewController: UIViewController {
             self?.distance = pedometerData.distance?.doubleValue
             
             print(pedometerData.distance ?? 0)
-            self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             
-            if (self?.distance)! > (self?.distanceTriggered)! {
+            DispatchQueue.main.async{
+                self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
+            }
+            
+            if (self?.distance)! > 40.0 {
+                self?.sendFinishNotification()
+            }
+            else if (self?.distance)! > (self?.distanceTriggered)! {
                 print("true")
                 self?.notCount! += 1
                 self?.sendNotification(distance: pedometerData.distance?.doubleValue, notifyCount: self?.notCount!)
@@ -165,6 +171,25 @@ class ViewController: UIViewController {
                 }
             })
         }
+    }
+    
+    func sendFinishNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "You made it back home!"
+        content.body = "You have water, but now you are exhausted. Your back hurts from carrying the heavy jug and your feet hurt from the rough ground. Unfortunately, you will have to make the trek for water again today, and tomorrow, and the day after that."
+        content.categoryIdentifier = "finishCategory"
+        content.sound = UNNotificationSound.default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        let requestIdentifier = "finish"
+        let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
+            if error != nil {
+                print("error \(String(describing:error))")
+            }
+        })
     }
 }
     
