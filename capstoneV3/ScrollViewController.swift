@@ -12,7 +12,7 @@ class ScrollViewController: UIViewController, UIScrollViewDelegate {
     
     //    @IBOutlet weak var scrollView: UIScrollView!
     
-    var images = ["1", "2", "3"]
+    var images = ["first", "second", "third"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     
     lazy var pageControl: UIPageControl = {
