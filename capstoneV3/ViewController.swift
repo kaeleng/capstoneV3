@@ -105,7 +105,7 @@ class ViewController: UIViewController {
                 self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             }
 //            print(self?.finishedMessageTriggered)
-            if (self?.distance)! > 40.0 && self?.finishedMessageTriggered == false {
+            if (self?.distance)! > 10.0 && self?.finishedMessageTriggered == false {
                 self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
                 self?.pedometer.stopUpdates()
