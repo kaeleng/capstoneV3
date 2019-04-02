@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var notCount: Int? = 0
 
     @IBOutlet weak var distLabel: UILabel!
+    @IBOutlet weak var notificationImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +106,7 @@ class ViewController: UIViewController {
                 self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             }
 //            print(self?.finishedMessageTriggered)
-            if (self?.distance)! > 10.0 && self?.finishedMessageTriggered == false {
+            if (self?.distance)! > 40.0 && self?.finishedMessageTriggered == false {
                 self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
                 self?.pedometer.stopUpdates()
@@ -114,11 +115,24 @@ class ViewController: UIViewController {
                 print("true")
                 self?.notCount! += 1
                 self?.sendNotification(distance: pedometerData.distance?.doubleValue, notifyCount: self?.notCount!)
+                self?.setNotificationImage(notifyCount: self?.notCount!)
                 self?.distanceTriggered += 10.0
             }
             //                print("Steps: ")
             //                print(self?.steps)
             
+        }
+    }
+    
+    private func setNotificationImage(notifyCount: Int?) {
+        var pic = 0
+        if notifyCount! <= 3 {
+            pic = notifyCount!
+        }else{
+            pic = 1
+        }
+        DispatchQueue.main.async{
+            self.notificationImage.image = UIImage(named: "\(pic)")
         }
     }
     
