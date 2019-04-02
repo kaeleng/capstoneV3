@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var steps : NSNumber! = nil
     var finishedMessageTriggered = false
     
-    var distanceTriggered = 10.0
+    var distanceTriggered = 595.46
     
     private let activityManager = CMMotionActivityManager()
     private let pedometer = CMPedometer()
@@ -105,7 +105,7 @@ class ViewController: UIViewController {
                 self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             }
 //            print(self?.finishedMessageTriggered)
-            if (self?.distance)! > 10.0 && self?.finishedMessageTriggered == false {
+            if (self?.distance)! > 5954.57 && self?.finishedMessageTriggered == false {
                 self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
                 self?.pedometer.stopUpdates()
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
                 print("true")
                 self?.notCount! += 1
                 self?.sendNotification(distance: pedometerData.distance?.doubleValue, notifyCount: self?.notCount!)
-                self?.distanceTriggered += 10.0
+                self?.distanceTriggered += 595.46
             }
             //                print("Steps: ")
             //                print(self?.steps)
@@ -130,26 +130,18 @@ class ViewController: UIViewController {
 //        }
 //    }
     
-    func metersToMiles(distance: Double?) -> String {
-        guard let distance = distance else {
-            return "0 miles"
-        }
-        let miles = distance * 0.0006213712
-        let milesStr = String(format: "%.2f", miles)
-        return milesStr + " miles"
-    }
-    
     func sendNotification(distance: Double?, notifyCount: Int?) {
         if let alertDistance = distance {
-
+            
+            let alertDistanceMiles = metersToMiles(distance: alertDistance)
             //creates content of notification
             let content = UNMutableNotificationContent()
-            content.title = "You have walked \(alertDistance) meters"
-            content.body = "Expand notification to see more"
+            content.title = "You have walked \(alertDistanceMiles)"
+            content.body = "You still haven't gotten back from your trek to get water. Expand notification to learn more about the global water crisis"
             content.categoryIdentifier = "infoCategory"
             content.sound = UNNotificationSound.default
             var pic = 0
-            if notifyCount! <= 3 {
+            if notifyCount! <= 10 {
                 pic = notifyCount!
             }else{
                 pic = 1
@@ -172,6 +164,15 @@ class ViewController: UIViewController {
                 }
             })
         }
+    }
+    
+    func metersToMiles(distance: Double?) -> String {
+        guard let distance = distance else {
+            return "0 miles"
+        }
+        let miles = distance * 0.0006213712
+        let milesStr = String(format: "%.2f", miles)
+        return milesStr + " miles"
     }
     
     func sendFinishNotification() {

@@ -47,7 +47,7 @@ class ScrollViewController: UIViewController, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             
             pageControl.leftAnchor.constraint(equalTo:view.leftAnchor),
-            pageControl.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-150.0),
+            pageControl.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-125.0),
             pageControl.rightAnchor.constraint(equalTo:view.rightAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 50)
             
