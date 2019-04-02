@@ -104,12 +104,13 @@ class ViewController: UIViewController {
             DispatchQueue.main.async{
                 self?.distLabel.text = self?.metersToMiles(distance: pedometerData.distance?.doubleValue) ?? "0"
             }
-            
+//            print(self?.finishedMessageTriggered)
             if (self?.distance)! > 40.0 && self?.finishedMessageTriggered == false {
                 self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
+                self?.pedometer.stopUpdates()
             }
-            else if (self?.distance)! > (self?.distanceTriggered)! {
+            else if (self?.distance)! > (self?.distanceTriggered)! && self?.finishedMessageTriggered == false {
                 print("true")
                 self?.notCount! += 1
                 self?.sendNotification(distance: pedometerData.distance?.doubleValue, notifyCount: self?.notCount!)
