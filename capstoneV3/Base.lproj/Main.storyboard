@@ -33,37 +33,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You've walked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsa-ui-gft">
-                                <rect key="frame" x="200" y="118" width="140" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You've walked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsa-ui-gft">
+                                <rect key="frame" x="200" y="101" width="140" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="YYw-nb-Jh1"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="k3M-cL-r24"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0 miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1i-q9-Dzv">
-                                <rect key="frame" x="200" y="166" width="157" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1i-q9-Dzv">
+                                <rect key="frame" x="200" y="149" width="157" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="out of 3.7 miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iub-wb-9Xz">
-                                <rect key="frame" x="200" y="219" width="146" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="out of 3.7 miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iub-wb-9Xz">
+                                <rect key="frame" x="200" y="202" width="146" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="sxz-DS-4EV"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="ujh-Oq-Vms">
-                                <rect key="frame" x="18" y="96" width="142" height="175"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="ujh-Oq-Vms">
+                                <rect key="frame" x="55" y="94" width="94" height="144"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="94" id="D5V-YV-xOx"/>
+                                </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-TF-jgf">
-                                <rect key="frame" x="62" y="343" width="250" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BNO-TF-jgf">
+                                <rect key="frame" x="37" y="283" width="309" height="309"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="BNO-TF-jgf" secondAttribute="height" multiplier="1:1" id="pO7-WB-3Ns"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.015686274509803921" green="0.15294117647058825" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="BNO-TF-jgf" firstAttribute="centerX" secondItem="epu-la-iAm" secondAttribute="centerX" constant="4" id="0It-PT-p5Y"/>
+                            <constraint firstItem="fsa-ui-gft" firstAttribute="top" secondItem="JLi-k7-we6" secondAttribute="top" constant="81" id="1Ij-l1-aXJ"/>
+                            <constraint firstItem="JLi-k7-we6" firstAttribute="trailing" secondItem="iub-wb-9Xz" secondAttribute="trailing" constant="29" id="3MM-NV-aA5"/>
+                            <constraint firstItem="BNO-TF-jgf" firstAttribute="trailing" secondItem="T1i-q9-Dzv" secondAttribute="trailing" constant="-11" id="8tm-Bu-bmo"/>
+                            <constraint firstItem="fsa-ui-gft" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iub-wb-9Xz" secondAttribute="leading" id="EGv-GB-yT3"/>
+                            <constraint firstItem="fsa-ui-gft" firstAttribute="leading" secondItem="T1i-q9-Dzv" secondAttribute="leading" id="H8A-8J-fbx"/>
+                            <constraint firstItem="BNO-TF-jgf" firstAttribute="top" secondItem="iub-wb-9Xz" secondAttribute="bottom" constant="54" id="J5A-Mv-vYL"/>
+                            <constraint firstItem="BNO-TF-jgf" firstAttribute="leading" secondItem="epu-la-iAm" secondAttribute="leading" constant="37" id="QAn-YG-uEy"/>
+                            <constraint firstItem="ujh-Oq-Vms" firstAttribute="centerY" secondItem="T1i-q9-Dzv" secondAttribute="centerY" id="RWY-YI-oe0"/>
+                            <constraint firstItem="iub-wb-9Xz" firstAttribute="top" secondItem="T1i-q9-Dzv" secondAttribute="bottom" constant="19" id="a5R-Gv-S1D"/>
+                            <constraint firstItem="T1i-q9-Dzv" firstAttribute="top" secondItem="fsa-ui-gft" secondAttribute="bottom" constant="14" id="ck6-0P-WTJ"/>
+                            <constraint firstItem="ujh-Oq-Vms" firstAttribute="top" secondItem="JLi-k7-we6" secondAttribute="top" constant="74" id="e47-jo-cMU"/>
+                            <constraint firstItem="ujh-Oq-Vms" firstAttribute="leading" secondItem="JLi-k7-we6" secondAttribute="leading" constant="55" id="idu-Ay-Nrm"/>
+                            <constraint firstItem="BNO-TF-jgf" firstAttribute="centerX" secondItem="epu-la-iAm" secondAttribute="centerX" constant="4" id="ilF-vy-EQ0"/>
+                            <constraint firstAttribute="bottom" secondItem="BNO-TF-jgf" secondAttribute="bottom" constant="75" id="nZR-2D-Aeg"/>
+                            <constraint firstItem="JLi-k7-we6" firstAttribute="trailing" secondItem="fsa-ui-gft" secondAttribute="trailing" constant="35" id="uiL-DD-BLL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JLi-k7-we6"/>
                     </view>
                     <connections>
