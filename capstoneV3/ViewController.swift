@@ -110,6 +110,11 @@ class ViewController: UIViewController {
                 self?.finishedMessageTriggered = true
                 self?.sendFinishNotification()
                 self?.pedometer.stopUpdates()
+                
+                //Display finish view controller 
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "FinishedViewController")
+                self?.present(controller, animated: true, completion: nil)
             }
             else if (self?.distance)! > (self?.distanceTriggered)! && self?.finishedMessageTriggered == false {
                 print("true")
@@ -135,15 +140,7 @@ class ViewController: UIViewController {
             self.notificationImage.image = UIImage(named: "\(pic)")
         }
     }
-    
-//    private func doStuffBasedOnDistance(distance: Double?){
-//        if distance! > 10.0 && distanceMessageTriggered == false {
-//            distanceMessageTriggered = true
-//            print("distance 20")
-//            sendNotification(distance: distance)
-//        }
-//    }
-    
+
     func sendNotification(distance: Double?, notifyCount: Int?) {
         if let alertDistance = distance {
             
