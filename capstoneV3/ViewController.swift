@@ -43,6 +43,7 @@ class ViewController: UIViewController {
                 print("no")
             }
         }
+
         
         let status = CMPedometer.authorizationStatus()
         startTrackingDistance()
@@ -138,6 +139,9 @@ class ViewController: UIViewController {
         }
         DispatchQueue.main.async{
             self.notificationImage.image = UIImage(named: "\(pic)")
+            
+            self.notificationImage.layer.borderWidth = 10
+            self.notificationImage.layer.borderColor = UIColor.white.cgColor
         }
     }
 
@@ -152,13 +156,15 @@ class ViewController: UIViewController {
             content.categoryIdentifier = "infoCategory"
             content.sound = UNNotificationSound.default
             var pic = 0
-            if notifyCount! <= 10 {
-                pic = notifyCount!
+            if let count = notifyCount && count <= 10 {
+                pic = count
             }else{
                 pic = 1
             }
-            let url = Bundle.main.url(forResource: "\(pic)", withExtension: "png")
-            if let attachment = try? UNNotificationAttachment(identifier: "information", url: url!, options: nil){
+            guard let url = Bundle.main.url(forResource: "\(pic)", withExtension: "png") else {
+                return
+            }
+            if let attachment = try? UNNotificationAttachment(identifier: "information", url: url, options: nil){
                 content.attachments = [attachment]
             }
 
